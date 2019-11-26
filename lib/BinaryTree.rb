@@ -12,6 +12,7 @@ class BTreeSort
 
   def self.sort(array)
     @start = BinaryTree.new(array.first, nil, nil)
+    array.shift 
     @sortarry = []
     array.each do |x|
       @look = @start 
@@ -22,24 +23,22 @@ class BTreeSort
   end
 
   def self.insert(value)
-      node = value <=> @look.payload
-      if node != 0 then
-        if node == -1
-          # left
-          if @look.left == nil then
-            @look.left = BinaryTree.new(value, nil, nil)
-          else
-            @look = @look.left
-            self.insert(value)
-          end
+    node = value <=> @look.payload
+      if node == -1
+        # left
+        if @look.left == nil then
+          @look.left = BinaryTree.new(value, nil, nil)
         else
-          # right
-          if @look.right == nil then
-            @look.right = BinaryTree.new(value, nil, nil)
-          else
-            @look = @look.right
-            self.insert(value)
-          end
+          @look = @look.left
+          self.insert(value)
+        end
+      else
+        # right
+        if @look.right == nil then
+          @look.right = BinaryTree.new(value, nil, nil)
+        else
+          @look = @look.right
+          self.insert(value)
         end
       end
   end
@@ -62,4 +61,3 @@ class BTreeSort
   end
 end
 
-BTreeSort.sort([7, 4, 9, 1, 6, 14, 10]).inspect
